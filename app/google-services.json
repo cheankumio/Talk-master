@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "118442397259",
+    "firebase_url": "https://talk-master.firebaseio.com",
+    "project_id": "talk-master",
+    "storage_bucket": "talk-master.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118442397259:android:7dc3c36e85ccc0f8",
+        "android_client_info": {
+          "package_name": "com.swagath.talk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118442397259-svp4654mak84t64siph7vsdjok24b38h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swagath.talk",
+            "certificate_hash": "9808BD0BAD96245035362F795E99A6E9BDB90C2A"
+          }
+        },
+        {
+          "client_id": "118442397259-k3troc77ml3uaopmtrgrvbifmi4oh2au.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8kQfAk8h08FRp_KYZcn8UWFCAds-HcGs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118442397259-k3troc77ml3uaopmtrgrvbifmi4oh2au.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
