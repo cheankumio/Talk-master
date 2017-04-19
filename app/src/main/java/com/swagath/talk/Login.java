@@ -1,11 +1,14 @@
 package com.swagath.talk;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,6 +17,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
+
+import es.dmoral.toasty.Toasty;
 
 public class Login extends AppCompatActivity {
 
@@ -22,7 +29,7 @@ public class Login extends AppCompatActivity {
     private static final String TAG = "Login";
 
     private EditText uNameFld, pwdFld;
-
+    Shimmer shimmer;
 
 
     @Override
@@ -37,7 +44,11 @@ public class Login extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
+                    Intent channelIntent = new Intent(Login.this, Chatroom.class);
+                    channelIntent.putExtra("UID", mAuth.getCurrentUser().getUid());
+                    startActivity(channelIntent);
+                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                    finish();
 
                 } else {
                     // User is signed out
@@ -51,6 +62,17 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        shimmer = new Shimmer();
+        shimmer.setDuration(1500)
+                .setStartDelay(300)
+                .setDirection(Shimmer.ANIMATION_DIRECTION_RTL);
+        ShimmerTextView txs = (ShimmerTextView)findViewById(R.id.shimmer_t);
+        shimmer.start(txs);
+
     }
 
     public void logThemIn (View view) {
@@ -63,15 +85,16 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(Login.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                Toasty.success(Login.this, "登入成功", Toast.LENGTH_SHORT, true).show();
                                 Log.d("MYLOG", "signInWithEmail:onComplete:" + task.isSuccessful());
                                 Intent channelIntent = new Intent(Login.this, Chatroom.class);
                                 channelIntent.putExtra("UID", mAuth.getCurrentUser().getUid());
                                 startActivity(channelIntent);
+                                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                                finish();
                             } else {
                                 Log.w(TAG, "signInWithEmail:failed", task.getException());
-                                Toast.makeText(Login.this, R.string.auth_failed,
-                                        Toast.LENGTH_SHORT).show();
+                                Toasty.info(Login.this, "請正確填寫E-mail與密碼", 6, true).show();
                             }
                         }
                     });
@@ -81,6 +104,7 @@ public class Login extends AppCompatActivity {
     public void signUp(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
     @Override

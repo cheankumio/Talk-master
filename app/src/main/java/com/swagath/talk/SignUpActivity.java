@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,6 +16,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
+
+import es.dmoral.toasty.Toasty;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -49,12 +54,20 @@ public class SignUpActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
 
     @Override
     public void onStart() {
         super.onStart();
+        ShimmerTextView tv = (ShimmerTextView)findViewById(R.id.shimmer_tv);
+        Shimmer shimmer = new Shimmer();
+        shimmer.setDuration(1300)
+                .setStartDelay(300);
+        shimmer.start(tv);
         mAuth.addAuthStateListener(mAuthListener);
     }
 
@@ -81,15 +94,13 @@ public class SignUpActivity extends AppCompatActivity {
                    public void onComplete(@NonNull Task<AuthResult> task) {
                        Log.d("MYLOG", "createUserWithEmail:onComplete:" + task.isSuccessful());
                        if (!task.isSuccessful()) {
-                           Toast.makeText(SignUpActivity.this, R.string.auth_failed,
-                                   Toast.LENGTH_SHORT).show();
+                           Toasty.info(SignUpActivity.this, "請正確填寫E-mail，密碼需6字元以上", 9, true).show();
                        }else{
+                           Toasty.success(SignUpActivity.this, "註冊成功", Toast.LENGTH_SHORT, true).show();
                            dbref.child("user").child(mAuth.getCurrentUser().getUid()).setValue(myName);
                            finish();
                        }
                    }
              });
-
-
     }
 }

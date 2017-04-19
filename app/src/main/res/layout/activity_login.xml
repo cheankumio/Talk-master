@@ -3,58 +3,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.swagath.talk.Login">
 
-    <EditText
+    <com.romainpiel.shimmer.ShimmerTextView
+        android:id="@+id/shimmer_t"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/uName"
-        android:hint="Username"
-        android:layout_marginTop="56dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/pwd"
-        android:layout_alignEnd="@+id/pwd" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/pwd"
-        android:layout_marginTop="134dp"
-        android:longClickable="false"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Sign in"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/loginBtn" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/loginBtn"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:onClick="logThemIn" />
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:text="無主題打屁亂亂聊"
+        android:textColor="#444"
+        android:textSize="40sp"
+        app:reflectionColor="#ddd" />
 
-    <Button
+    <EditText
+        android:id="@+id/uName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up here"
+        android:layout_alignEnd="@+id/pwd"
+        android:layout_alignStart="@+id/pwd"
+        android:layout_below="@+id/shimmer_t"
+        android:hint="E-mail"
+        android:textColor="#DDDDDD"
+        android:textColorHint="#AAAAAA" />
+
+    <EditText
+        android:id="@+id/pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/uName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        android:longClickable="false"
+        android:textColor="#DDDDDD"
+        android:textColorHint="#AAAAAA" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pwd"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="50dp"
+        android:onClick="logThemIn"
+        android:text="登入" />
+
+    <Button
         android:id="@+id/signUpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/loginBtn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp"
-        android:onClick="signUp" />
+        android:layout_marginTop="50dp"
+        android:onClick="signUp"
+        android:text="註冊帳號" />
 
 </RelativeLayout>

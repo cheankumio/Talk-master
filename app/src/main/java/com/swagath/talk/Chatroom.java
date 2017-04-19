@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -17,9 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import static com.swagath.talk.R.id.view;
 
 public class Chatroom extends AppCompatActivity {
 
@@ -38,6 +36,10 @@ public class Chatroom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatroom);
 
+        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         //取得從Login.java傳來的UID String
         Intent mintent = this.getIntent();
         userUID = mintent.getStringExtra("UID");
@@ -45,7 +47,7 @@ public class Chatroom extends AppCompatActivity {
 
         //設定ListView及adapter，承接database的文字流
         lv = (ListView)findViewById(R.id.chatRoomListView);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, displayItems);
+        adapter = new ArrayAdapter<String>(this, R.layout.message,R.id.message_text, displayItems);
         lv.setAdapter(adapter);
 
         //開啟FirebaseDatabase，並取得控制方法
