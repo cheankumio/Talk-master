@@ -19,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 public class Chatroom extends AppCompatActivity {
 
     FirebaseDatabase fdb;
@@ -31,6 +33,7 @@ public class Chatroom extends AppCompatActivity {
     EditText edit1;//使用者文字輸入框
     String userName;
     String userUID;
+    boolean runon = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +70,10 @@ public class Chatroom extends AppCompatActivity {
                 //將資料庫的文字流新增至adapter
                 adapter.add(dataSnapshot.getValue().toString());
                 //令ListView自動滑動至底部
-                scrollMyListViewToBottom();
+                if(runon==false){
+                    scrollMyListViewToBottom();
+                    runon = true;
+                }
             }
 
             @Override
@@ -102,8 +108,8 @@ public class Chatroom extends AppCompatActivity {
                     if (databaseError != null) {
                         Log.d("MYLOG", "Data could not be saved. " +databaseError.getMessage());
                     } else {
-
-                        Log.d("MYLOG", "Data saved successfully.");
+                        Toasty.success(Chatroom.this,"訊息已送出.",1).show();
+                        scrollMyListViewToBottom();
                     }
                 }
             });

@@ -87,11 +87,7 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toasty.success(Login.this, "登入成功", Toast.LENGTH_SHORT, true).show();
                                 Log.d("MYLOG", "signInWithEmail:onComplete:" + task.isSuccessful());
-                                Intent channelIntent = new Intent(Login.this, Chatroom.class);
-                                channelIntent.putExtra("UID", mAuth.getCurrentUser().getUid());
-                                startActivity(channelIntent);
-                                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                                finish();
+
                             } else {
                                 Log.w(TAG, "signInWithEmail:failed", task.getException());
                                 Toasty.info(Login.this, "請正確填寫E-mail與密碼", 6, true).show();
