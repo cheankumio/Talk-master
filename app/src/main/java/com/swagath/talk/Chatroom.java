@@ -10,11 +10,14 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -63,11 +66,14 @@ public class Chatroom extends AppCompatActivity {
         //取得使用者ID
         getUserNames();
 
+        Query recentPostsQuery = dbref.child(MESSAGE_DATA)
+                .limitToLast(250);
         //對dbref設定監聽
-        dbref.child(MESSAGE_DATA).addChildEventListener(new ChildEventListener() {
+        recentPostsQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //將資料庫的文字流新增至adapter
+
                 adapter.add(dataSnapshot.getValue().toString());
                 //令ListView自動滑動至底部
                 if(runon==false){
@@ -75,6 +81,7 @@ public class Chatroom extends AppCompatActivity {
                     runon = true;
                 }
             }
+
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -108,7 +115,7 @@ public class Chatroom extends AppCompatActivity {
                     if (databaseError != null) {
                         Log.d("MYLOG", "Data could not be saved. " +databaseError.getMessage());
                     } else {
-                        Toasty.success(Chatroom.this,"訊息已送出.",1).show();
+                        Toasty.success(Chatroom.this,"訊息已送出.", Toast.LENGTH_SHORT).show();
                         scrollMyListViewToBottom();
                     }
                 }
